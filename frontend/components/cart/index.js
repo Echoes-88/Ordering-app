@@ -14,11 +14,11 @@ function Cart() {
   return (
     <div>
       <Card style={{ padding: "10px 5px" }} className="cart">
-        <CardTitle style={{ margin: 10 }}>Your Order:</CardTitle>
+        <h4 style={{ margin: 10 }}>Votre commande :</h4>
         <hr />
         <CardBody style={{ padding: 10 }}>
           <div style={{ marginBottom: 6 }}>
-            <small>Items:</small>
+            {/* <small>Items:</small> */}
           </div>
           <div>
             {cart.items
@@ -31,10 +31,22 @@ function Cart() {
                         key={item.id}
                       >
                         <div>
-                          <span id="item-price">&nbsp; ${item.price}</span>
+                          <span id="item-price">&nbsp; {item.price}€</span>
                           <span id="item-name">&nbsp; {item.name}</span>
                         </div>
                         <div>
+                        <Button
+                            style={{
+                              height: 25,
+                              padding: 0,
+                              width: 15,
+                              marginRight: 10,
+                            }}
+                            onClick={() => appContext.removeItem(item)}
+                            color="link"
+                          >
+                            -
+                          </Button>
                           <Button
                             style={{
                               height: 25,
@@ -48,20 +60,8 @@ function Cart() {
                           >
                             +
                           </Button>
-                          <Button
-                            style={{
-                              height: 25,
-                              padding: 0,
-                              width: 15,
-                              marginRight: 10,
-                            }}
-                            onClick={() => appContext.removeItem(item)}
-                            color="link"
-                          >
-                            -
-                          </Button>
                           <span style={{ marginLeft: 5 }} id="item-quantity">
-                            {item.quantity}x
+                            quantité : {item.quantity}
                           </span>
                         </div>
                       </div>
@@ -74,8 +74,16 @@ function Cart() {
                 <div>
                   <Badge style={{ width: 200, padding: 10 }} color="light">
                     <h5 style={{ fontWeight: 100, color: "gray" }}>Total:</h5>
-                    <h3>${appContext.cart.total.toFixed(2)}</h3>
+                    <h3>{appContext.cart.total.toFixed(2)}€</h3>
                   </Badge>
+                  {router.pathname != "/checkout" && (
+                  <Link
+                    as={`/checkout`}
+                    href={`/checkout`}
+                  >
+                    <a className="btn btn-primary">Finaliser la commande</a>
+                  </Link>
+                  )}
                   {router.pathname === "/restaurants" && (
                     <div
                       style={{
@@ -85,7 +93,7 @@ function Cart() {
                     >
                       <Link href="/checkout">
                         <Button style={{ width: "100%" }} color="primary">
-                          <a>Order</a>
+                          <a>Commande</a>
                         </Button>
                       </Link>
                     </div>
@@ -98,13 +106,27 @@ function Cart() {
                       style={{ color: "blue" }}
                       onClick={() => window.history.back()}
                     >
-                      back to restaurant
+                      Revenir au restaurant
                     </small>
                   )}
                 </>
               )
             ) : (
-              <h5>Login to Order</h5>
+              <>
+              <Link href={{
+                pathname: '/login',
+                query: { urlOrigin: window.location.href },
+              }}>
+                <button className="btn">
+                  <a>Connection</a>
+                </button>
+              </Link>
+              <Link href="/register">
+                <button className="btn">
+                  <a>Créer un compte</a>
+                </button>
+              </Link>
+              </>
             )}
           </div>
           {console.log(router.pathname)}
@@ -123,6 +145,16 @@ function Cart() {
         #item-name {
           font-size: 1.3em;
           color: rgba(97, 97, 97, 1);
+        }
+        .btn {
+          margin-bottom:0.4rem;
+          background-color:#4b4b4b;
+          border: white solid 1px;
+          color: white;
+        }
+        .btn:hover {
+          background-color:#242424;
+          border: white solid 1px;
         }
       `}</style>
     </div>

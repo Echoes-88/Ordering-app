@@ -39,10 +39,7 @@ function CheckoutForm() {
     // // e.g. createToken - https://stripe.com/docs/js/tokens_sources/create_token?type=cardElement
     // get token back from stripe to process credit card
     const token = await stripe.createToken(cardElement);
-
-    // Debbug
-    console.log(token)
-
+    // debbug : console.log(token)
     const userToken = Cookies.get("token");
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders`, {
       method: "POST",
@@ -57,9 +54,6 @@ function CheckoutForm() {
       }),
     });
 
-    // Debbug
-    console.log(response)
-    
     if (!response.ok) {
       setError(response.statusText);
     }
@@ -81,21 +75,21 @@ function CheckoutForm() {
 
   return (
     <div className="paper">
-      <h5>Your information:</h5>
+      <h5>Vos informations :</h5>
       <hr />
       <FormGroup style={{ display: "flex" }}>
         <div style={{ flex: "0.90", marginRight: 10 }}>
-          <Label>Address</Label>
+          <Label>Adresse</Label>
           <Input name="address" onChange={onChange} />
         </div>
       </FormGroup>
       <FormGroup style={{ display: "flex" }}>
         <div style={{ flex: "0.65", marginRight: "6%" }}>
-          <Label>City</Label>
+          <Label>Ville</Label>
           <Input name="city" onChange={onChange} />
         </div>
         <div style={{ flex: "0.25", marginRight: 0 }}>
-          <Label>State</Label>
+          <Label>Département</Label>
           <Input name="state" onChange={onChange} />
         </div>
       </FormGroup>

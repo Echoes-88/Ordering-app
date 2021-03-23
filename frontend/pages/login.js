@@ -19,8 +19,14 @@ function Login(props) {
   const [error, setError] = useState(false);
   const router = useRouter();
   const appContext = useContext(AppContext);
-  
+
+  const [urlOrigin, setUrlOrigin] = useState();
+
   useEffect(() => {
+    // Getting url origin to redirect after login
+    const url = window.location.search.split('restaurants%2F');
+    setUrlOrigin(url[1]);
+
     if (appContext.isAuthenticated) {
       router.push("/"); // redirect if you're already logged in
     }
@@ -36,7 +42,7 @@ function Login(props) {
         <Col sm="12" md={{ size: 5, offset: 3 }}>
           <div className="paper">
             <div className="header">
-              <img src="https://strapi.io/assets/images/logo.png" />
+              <img src="https://res.cloudinary.com/echoes88/image/upload/v1616361486/logo_big_0ffffac8a4.png" />
             </div>
             <section className="wrapper">
               {Object.entries(error).length !== 0 &&
@@ -56,7 +62,7 @@ function Login(props) {
               <Form>
                 <fieldset disabled={loading}>
                   <FormGroup>
-                    <Label>Email:</Label>
+                    <Label>Email :</Label>
                     <Input
                       onChange={(event) => onChange(event)}
                       name="identifier"
@@ -64,7 +70,7 @@ function Login(props) {
                     />
                   </FormGroup>
                   <FormGroup style={{ marginBottom: 30 }}>
-                    <Label>Password:</Label>
+                    <Label>Mot de passe :</Label>
                     <Input
                       onChange={(event) => onChange(event)}
                       type="password"
@@ -76,7 +82,7 @@ function Login(props) {
                   <FormGroup>
                     <span>
                       <a href="">
-                        <small>Forgot Password?</small>
+                        <small>Mot de passe oublié ?</small>
                       </a>
                     </span>
                     <Button
@@ -84,7 +90,7 @@ function Login(props) {
                       color="primary"
                       onClick={() => {
                         setLoading(true);
-                        login(data.identifier, data.password)
+                        login(data.identifier, data.password, urlOrigin)
                           .then((res) => {
                             setLoading(false);
                             // set authed User in global context to update header/app state
@@ -96,7 +102,7 @@ function Login(props) {
                           });
                       }}
                     >
-                      {loading ? "Loading... " : "Submit"}
+                      {loading ? "Chargement... " : "Valider"}
                     </Button>
                   </FormGroup>
                 </fieldset>
@@ -120,10 +126,15 @@ function Login(props) {
           }
           .header {
             width: 100%;
-            height: 120px;
-            background-color: #2196f3;
+            height: 3rem;
+            background-color: #ffffff;
             margin-bottom: 30px;
             border-radius-top: 6px;
+          }
+          .header img {
+            width: 50%;
+            margin: 0;
+            margin-top: 1rem;
           }
           .wrapper {
             padding: 10px 30px 20px 30px !important;

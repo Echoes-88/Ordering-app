@@ -30,7 +30,8 @@ export const registerUser = (username, email, password) => {
   });
 };
 
-export const login = (identifier, password) => {
+export const login = (identifier, password, urlOrigin) => {
+
   //prevent function from being ran on the server
   if (typeof window === "undefined") {
     return;
@@ -46,6 +47,9 @@ export const login = (identifier, password) => {
         //resolve the promise to set loading to false in SignUp form
         resolve(res);
         //redirect back to home page for restaurance selection
+        if(urlOrigin) {
+          Router.push(`/restaurants/${urlOrigin}`);
+        }
         Router.push("/");
       })
       .catch((error) => {

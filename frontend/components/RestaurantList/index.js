@@ -1,6 +1,8 @@
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 
+import DOMPurify from 'dompurify'
+
 import Link from "next/link";
 
 import {
@@ -50,15 +52,15 @@ function RestaurantList(props) {
                   src={`${res.image.url}`}
                 />
                 <CardBody>
-                  <CardTitle>{res.name}</CardTitle>
-                  <CardText>{res.description}</CardText>
-                </CardBody>
+                  <h2>{res.name}</h2>
+                  <CardText dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(res.description)}}></CardText>
+                </CardBody> 
                 <div className="card-footer">
                   <Link
                     as={`/restaurants/${res.id}`}
                     href={`/restaurants?id=${res.id}`}
                   >
-                    <a className="btn btn-primary">View</a>
+                    <a className="btn">Carte du restaurant</a>
                   </Link>
                 </div>
               </Card>
@@ -79,6 +81,19 @@ function RestaurantList(props) {
               }
               .card-columns {
                 column-count: 3;
+              }
+              .btn {
+                background-color:#69C014;
+                border: white solid 1px;
+                color: white;
+              }
+              .btn:hover {
+                background-color:#559e0d;
+                border: white solid 1px;
+              }
+              .btn:focus {
+                background-color:#559e0d;
+                border: white solid 1px;
               }
             `}
           </style>

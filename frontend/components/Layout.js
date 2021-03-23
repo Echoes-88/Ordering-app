@@ -33,12 +33,19 @@ const Layout = (props) => {
               color: white;
               padding-top: 11px;
             }
+            .nav-link {
+              color:black;
+            }
+            .nav-logo {
+              height:2.5rem;
+              cursor:pointer;
+            }
           `}
         </style>
-        <Nav className="navbar navbar-dark bg-dark">
+        <Nav className="navbar navbar-light bg-light">
           <NavItem>
             <Link href="/">
-              <a className="navbar-brand">Home</a>
+            <img className="nav-logo" src="https://res.cloudinary.com/echoes88/image/upload/v1616361486/logo_big_0ffffac8a4.png" />
             </Link>
           </NavItem>
 
@@ -47,7 +54,7 @@ const Layout = (props) => {
               <h5>{user.username}</h5>
             ) : (
               <Link href="/register">
-                <a className="nav-link"> Sign up</a>
+                <a className="nav-link"> Créer un compte</a>
               </Link>
             )}
           </NavItem>
@@ -61,12 +68,12 @@ const Layout = (props) => {
                     setUser(null);
                   }}
                 >
-                  Logout
+                  Déconnexion
                 </a>
               </Link>
             ) : (
               <Link href="/login">
-                <a className="nav-link">Sign in</a>
+                <a className="nav-link">Se connecter</a>
               </Link>
             )}
           </NavItem>

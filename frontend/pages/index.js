@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Col, Input, InputGroup, InputGroupAddon, Row } from "reactstrap";
 import RestaurantList from "../components/RestaurantList";
 
+import Login from './login'
+
 function Home() {
   const [query, updateQuery] = useState("");
   return (
@@ -11,7 +13,7 @@ function Home() {
         <Col>
           <div className="search">
             <InputGroup>
-              <InputGroupAddon addonType="append"> Search </InputGroupAddon>
+              <InputGroupAddon addonType="append"> Rechercher un restaurant </InputGroupAddon>
               <Input
                 onChange={e => updateQuery(e.target.value.toLocaleLowerCase())}
                 value={query}

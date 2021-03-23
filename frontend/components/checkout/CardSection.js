@@ -6,7 +6,7 @@ function CardSection(props) {
   return (
     <div>
       <div>
-        <label htmlFor="card-element">Credit or debit card</label>
+        <label htmlFor="card-element">Informations bancaires</label>
 
         <div>
           <fieldset style={{ border: "none" }}>
@@ -20,7 +20,7 @@ function CardSection(props) {
               </div>
               <br />
               <div className="order-button-wrapper">
-                <button onClick={props.submitOrder}>Confirm order</button>
+                <button onClick={props.submitOrder}>Valider la commande</button>
               </div>
               {props.stripeError ? (
                 <div>{props.stripeError.toString()}</div>

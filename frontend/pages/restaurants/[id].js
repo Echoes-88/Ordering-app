@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { useRouter } from "next/router";
 import { gql } from "apollo-boost";
 
+import DOMPurify from 'dompurify'
 
 import Cart from "../../components/cart";
 import AppContext from "../../context/AppContext";
@@ -51,29 +52,35 @@ function Restaurants() {
       <>
         <h1>{restaurant.name}</h1>
         <Row>
+          <Col>
+            <div>
+              <Cart />
+            </div>
+          </Col>
           {restaurant.dishes.map((res) => (
-            <Col xs="6" sm="4" style={{ padding: 0 }} key={res.id}>
+            <Col xs="6" sm="3" style={{ padding: 0 }} key={res.id}>
               <Card style={{ margin: "0 10px" }}>
                 <CardImg
                   top={true}
-                  style={{ height: 250 }}
                   src={`${res.image.url}`} 
                 />
                 <CardBody>
-                  <CardTitle>{res.name}</CardTitle>
-                  <CardText>{res.description}</CardText>
+                  <h2>{res.name}</h2>
+                  <CardText dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(res.description)}}></CardText>
                 </CardBody>
                 <div className="card-footer">
-                  <Button
-                    outline
-                    color="primary"
+                  <button
+                    className="btn"
                     onClick={() => appContext.addItem(res)}
                   >
-                    + Add To Cart
-                  </Button>
+                    + Ajouter à la commande
+                  </button>
 
                   <style jsx>
                     {`
+                      h2 {
+                        font-size:1.5em;
+                      }
                       a {
                         color: white;
                       }
@@ -84,11 +91,24 @@ function Restaurants() {
                       .container-fluid {
                         margin-bottom: 30px;
                       }
-                      .btn-outline-primary {
-                        color: #007bff !important;
+                      .btn-outline {
+                        color: #69C014 !important;
                       }
                       a:hover {
                         color: white !important;
+                      }
+                      .btn {
+                        background-color:#69C014;
+                        border: white solid 1px;
+                        color: white;
+                      }
+                      .btn:hover {
+                        background-color:#559e0d;
+                        border: white solid 1px;
+                      }
+                      .btn:focus {
+                        background-color:#559e0d;
+                        border: white solid 1px;
                       }
                     `}
                   </style>
@@ -96,11 +116,6 @@ function Restaurants() {
               </Card>
             </Col>
           ))}
-          <Col xs="3" style={{ padding: 0 }}>
-            <div>
-              <Cart />
-            </div>
-          </Col>
         </Row>
       </>
     );
